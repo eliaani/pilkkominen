@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+function Todolist() {
+  const [todo, setTodo] = useState({date: '', description: ''});
+  const [todos, setTodos] = useState([]);
+
+  const inputChanged = (event) => {
+    setTodo({...todo, [event.target.name]: event.target.value});
+  }
+
+  const addTodo = (event) => {
+    setTodos([...todos, todo]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{width: '500px', margin: 'auto'}}>
+      <input type="date" onChange={inputChanged} placeholder="Date" name="date" value={todo.date}/>
+      <input type="text" onChange={inputChanged} placeholder="Description" name="description" value={todo.description}/>
+      <button onClick={addTodo}>Add</button>
+    
+      <table>
+        <tr><td style={{width: '110px'}}>Date</td><td>Description</td></tr>
+        <tbody>
+        {
+          todos.map((todo, index) =><tr key={index}><td>{todo.date}</td><td>{todo.description}</td></tr>)
+        }
+        </tbody>
+      </table>   
     </div>
   );
-}
+};
 
-export default App;
+export default Todolist;
